@@ -22,6 +22,10 @@ git merge命令用于合并指定分支到当前分支
 
 删除分支:
 git branch -d xxx   删除xxx分支
+git branch -D xxx   强制删除xxx分支
+
+修改分支名称: 先切换到要修改名称分支
+git branch -m "新的分支名称"
 
 git log --graph命令可以看到分支合并图
 如git log --graph --pretty=oneline --abbrev-commit
@@ -62,3 +66,51 @@ git show <tagname>查看标签信息
 命令git push origin --tags可以推送全部未推送过的本地标签；
 命令git tag -d <tagname>可以删除一个本地标签；
 命令git push origin :refs/tags/<tagname>可以删除一个远程标签。删除远程标签注意先删除本地标签，再删除远程标签
+
+
+git ignore注意事项:
+# 忽略*.o和*.a文件
+
+ *.[oa]
+
+# 忽略*.b和*.B文件，my.b除外
+
+*.[bB]
+
+!my.b
+
+# 忽略dbg文件和dbg目录
+
+dbg
+
+# 只忽略dbg目录，不忽略dbg文件
+
+dbg/
+
+# 只忽略dbg文件，不忽略dbg目录
+
+dbg
+
+!dbg/
+
+# 只忽略当前目录下的dbg文件和目录，子目录的dbg不在忽略范围内
+
+/dbg
+
+# 以'#'开始的行，被视为注释.
+
+ * ？：代表任意的一个字符
+    * ＊：代表任意数目的字符
+    * {!ab}：必须不是此类型
+    * {ab,bb,cx}：代表ab,bb,cx中任一类型即可
+    * [abc]：代表a,b,c中任一字符即可
+    * [ ^abc]：代表必须不是a,b,c中任一字符
+	
+查看总行数
+git ls-files | xargs cat | wc -l
+查看文件行数
+git ls-files | xargs wc -l
+
+合并某个commit节点到当前所在分支
+git cherry-pick commit 节点标识符或标签
+
